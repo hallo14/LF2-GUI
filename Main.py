@@ -6,12 +6,12 @@ import math
 
 RANGES = {
     "Last 24 Hours": {
-        "energy_used": (10, 50),  # kWh
-        "avg_battery_charge": (20, 100),  # percentage
-        "distance_traveled": (5, 50),  # km
-        "scooters_used": (1, 20),  # count
-        "revenue_via_distance": (20, 500),  # $
-        "revenue_via_time": (10, 400),  # $
+        "energy_used": (10, 50),
+        "avg_battery_charge": (20, 100), 
+        "distance_traveled": (5, 50), 
+        "scooters_used": (1, 20), 
+        "revenue_via_distance": (20, 500),
+        "revenue_via_time": (10, 400),  
     },
     "Last 30 Days": {
         "energy_used": (300, 1000),
@@ -31,8 +31,8 @@ RANGES = {
     }
 }
 
-# Initialize global variables for sunlight and blinds position
-current_blinds_position = 50  # Starting blinds position (%)
+
+current_blinds_position = 50
 sunlight_change = 5000
 
 def get_random_electricity_price():
@@ -51,24 +51,21 @@ def generate_random_stats(timeframe):
 def get_sunlight_and_blinds():
     global current_blinds_position, sunlight_change
 
-    # Simulate a gradual change in sunlight (lumens) with small random increments
     sunlight_change += random.randint(-20, 10)
-    current_sunlight = max(100, abs(10000 - abs(sunlight_change % 20000)))  # Clamp between 1000 and 10000 lumens
+    current_sunlight = max(100, abs(10000 - abs(sunlight_change % 20000)))
 
-    # Adjust blinds based on sunlight (more sunlight = lower blinds)
     target_blinds_position = min(100, max(0, int((current_sunlight - 1000) / 90)))
 
-    # Smooth transition of blinds position towards target
     if current_blinds_position < target_blinds_position:
-        current_blinds_position += 1  # Increase by a small step
+        current_blinds_position += 1  
     elif current_blinds_position > target_blinds_position:
-        current_blinds_position -= 1  # Decrease by a small step
+        current_blinds_position -= 1
 
     return current_sunlight, current_blinds_position
 
 root = tk.Tk()
 root.title("E-Scooter Company Dashboard")
-root.attributes("-fullscreen", True)  # Enable full screen
+root.attributes("-fullscreen", True)
 root.configure(bg="#F5F5F5")
 
 root.bind("<Escape>", lambda e: root.destroy())
@@ -153,13 +150,12 @@ top_right_frame.place(relx=1.0, rely=0, anchor="ne")
 
 def update_blinds():
 
-     # Update sunlight and blinds position
     sunlight, blinds_position = get_sunlight_and_blinds()
     sunlight_label.config(text=f"Sunlight: {sunlight} lm")
     blinds_label.config(text=f"Blinds: {blinds_position}%")
 
     
-    root.after(1500, update_blinds)  # Update every second
+    root.after(1500, update_blinds)
 
     
 def update_time():
@@ -167,7 +163,7 @@ def update_time():
     current_time = time.strftime("%H:%M:%S")
     time_label.config(text=f"Time: {current_time}")
     
-    root.after(1000, update_time)  # Update every second
+    root.after(1000, update_time)
 
 time_label = ttk.Label(top_right_frame, text="Time: 00:00:00", font=("Arial", 14))
 time_label.pack(anchor="ne")
