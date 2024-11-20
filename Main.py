@@ -109,19 +109,21 @@ ttk.Label(calculator_frame, text="Time (minutes):", font=stat_font).grid(row=1, 
 time_entry = ttk.Entry(calculator_frame, width=10)
 time_entry.grid(row=1, column=1, padx=10)
 
+electricity_cost = random.uniform(0.05, 0.25)
+
 def calculate_price():
+    global electricity_cost
     price_per_km = 0.50
     price_per_minute = 0.20
-    electricity_cost = 0.10
     
     distance = distance_entry.get()
     time = time_entry.get()
-    cost = electricity_cost
+    cost = 0
     if distance:
-        cost += float(distance) * price_per_km
+        cost += float(distance) * price_per_km + (float(distance) * electricity_cost)
         time_entry.delete(0, tk.END)
     elif time:
-        cost += float(time) * price_per_minute
+        cost += float(time) * price_per_minute + (float(time) * electricity_cost)
     price_label.config(text=f"Calculated Price: ${cost:.2f}")
 
 calculate_button = ttk.Button(calculator_frame, text="Calculate Price", command=calculate_price)
@@ -130,19 +132,6 @@ calculate_button.grid(row=2, column=0, columnspan=2, pady=10)
 price_label = ttk.Label(calculator_frame, text="Calculated Price: $0.00", font=section_font)
 price_label.grid(row=3, column=0, columnspan=2, pady=10)
 
-electricity_frame = ttk.LabelFrame(root, text="Electricity Price", padding=20)
-electricity_frame.pack(fill="both", padx=40, pady=20)
-
-def update_electricity_price():
-    current_electricity_price = get_random_electricity_price()
-    electricity_label_text = f"Current Price per kWh: ${current_electricity_price:.2f}"
-    electricity_label.config(text=electricity_label_text)
-
-update_electricity_price_button = ttk.Button(electricity_frame, text="Update Electricity Price", command=update_electricity_price)
-update_electricity_price_button.pack(pady=10)
-
-electricity_label = ttk.Label(electricity_frame, text="Current Price per kWh: $0.00", font=stat_font)
-electricity_label.pack(anchor="w", pady=10)
 
 top_right_frame = tk.Frame(root, bg="#F5F5F5", padx=10, pady=10)
 top_right_frame.place(relx=1.0, rely=0, anchor="ne")
