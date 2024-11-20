@@ -119,6 +119,7 @@ def calculate_price():
     cost = electricity_cost
     if distance:
         cost += float(distance) * price_per_km
+        time_entry.delete(0, tk.END)
     elif time:
         cost += float(time) * price_per_minute
     price_label.config(text=f"Calculated Price: ${cost:.2f}")
