@@ -2,7 +2,6 @@ import tkinter as tk
 from tkinter import ttk
 import random
 import time
-import math
 
 RANGES = {
     "Last 24 Hours": {
@@ -120,7 +119,7 @@ def calculate_price():
     cost = electricity_cost
     if distance:
         cost += float(distance) * price_per_km
-    if time:
+    elif time:
         cost += float(time) * price_per_minute
     price_label.config(text=f"Calculated Price: ${cost:.2f}")
 
