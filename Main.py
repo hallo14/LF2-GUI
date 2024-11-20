@@ -2,7 +2,6 @@ import tkinter as tk
 from tkinter import ttk
 import random
 import time
-import math
 
 RANGES = {
     "Last 24 Hours": {
